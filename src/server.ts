@@ -1,11 +1,5 @@
-import express from 'express'
+import { app } from './app'
 
-const app = express()
-
-app.get('/health', ( request, response ) => {
-  return response
-})
-
-app.listen('/', () => {
-  console.log(`server is runnig in ${process.env.PORT}`)
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT}`)
 })
