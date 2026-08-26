@@ -4,12 +4,12 @@ export interface Seat {
   id: string
   eventId: string
   status: SeatStatus
-  seatNumber: number
+  seatNumber: string
 }
 
 export interface CreateSeatData {
   eventId: string
-  seatnumber: number
+  seatnumber: string
 }
 
 export interface SeatsRepository {

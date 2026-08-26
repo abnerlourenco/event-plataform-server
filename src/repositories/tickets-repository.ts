@@ -2,13 +2,13 @@ export type TicketStatus = 'VALID' | 'USED' | 'CANCELLED'
 
 export interface Ticket {
   id: string
-  orderId: string
+  orderId: string | null
   eventId: string
-  hashCode: string
-  qrCodeUrl: string
+  hashCode: string | null
+  qrCodeUrl: string | null
   status: TicketStatus
   seatId: string
-  validatedAt: Date
+  validatedAt: Date | null
 }
 
 export interface CreateTicketData {
