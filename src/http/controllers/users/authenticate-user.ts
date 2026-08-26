@@ -12,7 +12,10 @@ export async function authenticateUser(request: Request, response: Response) {
 
   const authenticateUserUseCase = makeAuthenticateUserUseCase()
 
-  const user = await authenticateUserUseCase.execute({ email, password })
+  const authResponse = await authenticateUserUseCase.execute({
+    email,
+    password,
+  })
 
-  return response.status(200).json(user)
+  return response.status(200).json(authResponse)
 }

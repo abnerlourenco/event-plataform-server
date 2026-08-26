@@ -3,6 +3,7 @@ import { z } from 'zod'
 const envSchema = z.object({
   PORT: z.coerce.number(),
   POSTGRES_URL: z.string(),
+  JWT_SECRET_TOKEN: z.string().min(32),
 })
 
 export const env = envSchema.parse(process.env)

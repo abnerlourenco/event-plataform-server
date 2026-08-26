@@ -1,7 +1,9 @@
+import jwt from 'jsonwebtoken'
+import { env } from '../../env.ts'
 import type {
   UserRole,
   UsersRepository,
-} from '@/repositories/users-repository.ts'
+} from '../../repositories/users-repository.ts'
 import { comparePassword } from './../../utils/hash.ts'
 import { AppError } from '../errors/app-error.ts'
 
@@ -16,6 +18,7 @@ interface AuthenticateUserResponse {
     email: string
     role: UserRole
   }
+  token: string
 }
 
 export class AuthenticateUserUseCase {
@@ -41,12 +44,18 @@ export class AuthenticateUserUseCase {
       throw new AppError('Email or password incorrect!', 401)
     }
 
+    const token = jwt.sign({}, env.JWT_SECRET_TOKEN, {
+      subject: user.id,
+      expiresIn: '1d',
+    })
+
     const authReturn: AuthenticateUserResponse = {
       user: {
         email: user.email,
         name: user.name,
         role: user.role,
       },
+      token,
     }
 
     return authReturn
