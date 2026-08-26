@@ -5,6 +5,7 @@ export interface User {
   name: string
   email: string
   role: UserRole
+  password: string
 }
 
 export interface CreateUserData {
@@ -15,5 +16,5 @@ export interface CreateUserData {
 
 export interface UsersRepository {
   findByEmail(email: string): Promise<User | null>
-  create(data: CreateUserData): Promise<User>
+  create(data: CreateUserData): Promise<void>
 }

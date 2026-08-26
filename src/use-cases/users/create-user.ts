@@ -1,7 +1,4 @@
-import type {
-  User,
-  UsersRepository,
-} from '../../repositories/users-repository.ts'
+import type { UsersRepository } from '../../repositories/users-repository.ts'
 import { hashPassword } from '../../utils/hash.ts'
 import { AppError } from '../errors/app-error.ts'
 
@@ -18,7 +15,7 @@ export class CreateUserUseCase {
     this.usersRepository = usersRepository
   }
 
-  async execute({ name, email, password }: CreateUserRequest): Promise<User> {
+  async execute({ name, email, password }: CreateUserRequest): Promise<void> {
     const userWithSameEmail = await this.usersRepository.findByEmail(email)
 
     if (userWithSameEmail) {
@@ -27,6 +24,6 @@ export class CreateUserUseCase {
 
     const passwordHash = await hashPassword(password)
 
-    return this.usersRepository.create({ name, email, passwordHash })
+    await this.usersRepository.create({ name, email, passwordHash })
   }
 }
