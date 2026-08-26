@@ -1,1 +1,5 @@
+export * from './events.ts'
+export * from './orders.ts'
+export * from './seats.ts'
+export * from './tickets.ts'
 export * from './users.ts'

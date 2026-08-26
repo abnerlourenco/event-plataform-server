@@ -22,11 +22,11 @@
 
 ### RF
 
-- Deve ser possível buscar de filmes de APIs externas (TMDb).
+- Deve ser possível buscar de filmes de APIs externas (TMDb). - OK
 
 ### RN
 
-- Apenas usuários administradores ou com perfil `ORGANIZER` podem realizar a busca e importação do catálogo externo.
+- Apenas usuários administradores ou com perfil `ORGANIZER` podem realizar a busca e importação do catálogo externo. - OK
 
 ---
 
@@ -82,6 +82,7 @@
 ### RF
 
 - Deve ser possível visualizar a lista de ingressos do usuário logado ("Meus Ingressos").
+- Deve ser possivel compartilhar um ingresso via link publico.(qualquer pessoa com link pode abrir)
 - Deve ser possível exibir o QR Code e o código hash de um ingresso individual.
 
 ### RN
