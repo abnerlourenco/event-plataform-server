@@ -6,7 +6,7 @@ import { ensureOrganizer } from '../middlewares/ensure-organizer.ts'
 
 const eventsRoutes = Router()
 
-eventsRoutes.get('/', ensureAuthenticated, ensureOrganizer, listEvents)
+eventsRoutes.get('/', listEvents)
 eventsRoutes.post('/', ensureAuthenticated, ensureOrganizer, createEvent)
 
 export { eventsRoutes }

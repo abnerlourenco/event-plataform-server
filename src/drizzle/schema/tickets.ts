@@ -2,6 +2,7 @@ import { pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { events } from './events.ts'
 import { orders } from './orders.ts'
 import { seats } from './seats.ts'
+import { users } from './users.ts'
 
 export const ticketStatus = pgEnum('ticket_status', [
   'VALID',
@@ -25,4 +26,7 @@ export const tickets = pgTable('tickets', {
     .unique()
     .notNull(),
   validatedAt: timestamp('validated_at', { withTimezone: true }),
+  validatedBy: uuid('validated_by').references(() => users.id, {
+    onDelete: 'no action',
+  }),
 })

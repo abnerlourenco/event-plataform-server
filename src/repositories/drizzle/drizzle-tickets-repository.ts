@@ -4,6 +4,7 @@ import { tickets } from '../../drizzle/schema/tickets.ts'
 import type {
   CreateTicketData,
   Ticket,
+  TicketStatus,
   TicketsRepository,
 } from '../tickets-repository.ts'
 
@@ -20,5 +21,9 @@ export class DrizzleTicketsRepository implements TicketsRepository {
 
   async create(data: CreateTicketData): Promise<void> {
     await db.insert(tickets).values(data)
+  }
+
+  async updateStatusbyId(id: string, status: TicketStatus): Promise<void> {
+    await db.update(tickets).set({ status }).where(eq(tickets.id, id))
   }
 }

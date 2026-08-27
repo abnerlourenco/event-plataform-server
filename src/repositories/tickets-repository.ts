@@ -9,6 +9,7 @@ export interface Ticket {
   status: TicketStatus
   seatId: string
   validatedAt: Date | null
+  validatedBy: string | null
 }
 
 export interface CreateTicketData {
@@ -20,4 +21,5 @@ export interface CreateTicketData {
 export interface TicketsRepository {
   findById(id: string): Promise<Ticket | null>
   create(data: CreateTicketData): Promise<void>
+  updateStatusbyId(id: string, status: TicketStatus): Promise<void>
 }

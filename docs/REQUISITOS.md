@@ -34,15 +34,15 @@
 
 ### RF
 
-- Deve ser possível cadastrar um novo evento.
-- Deve ser possível listar os eventos cadastrados pelo organizador.
+- Deve ser possível cadastrar um novo evento. -OK
+- Deve ser possível listar os eventos cadastrados pelo organizador. -OK
 
 ### RN
 
-- Ao agendar um evento, deve-se salvar a referência do provedor (`event_provider`) e o identificador externo (`external_id`) para evitar duplicidade.
-- Não deve ser possível cadastrar um evento sem definir local, data/hora, capacidade total e preço.
-- Não deve ser possível cadastrar um evento caso o usuário não seja do perfil `ORGANIZER`.
-- Ao cadastrar um evento do tipo "assentos marcados", a aplicação deve gerar automaticamente o mapa de assentos associado.
+- Ao agendar um evento, deve-se salvar a referência do provedor (`event_provider`) e o identificador externo (`external_id`) para evitar duplicidade. -OK
+- Não deve ser possível cadastrar um evento sem definir local, data/hora, capacidade total e preço. -OK
+- Não deve ser possível cadastrar um evento caso o usuário não seja do perfil `ORGANIZER`. -OK
+- Ao cadastrar um evento, a aplicação deve gerar automaticamente o mapa de assentos associado.
 
 ---
 
@@ -50,12 +50,12 @@
 
 ### RF
 
-- Deve ser possível listar todos os eventos disponíveis na plataforma.
+- Deve ser possível listar todos os eventos disponíveis na plataforma. -OK
 - Deve ser possível buscar e filtrar eventos por título, data.
 
 ### RN
 
-- Não deve ser necessário estar logado para listar ou buscar eventos.
+- Não deve ser necessário estar logado para listar ou buscar eventos. -OK
 
 ---
 

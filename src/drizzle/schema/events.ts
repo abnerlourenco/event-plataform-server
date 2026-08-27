@@ -1,5 +1,4 @@
 import {
-  boolean,
   integer,
   pgTable,
   real,
@@ -23,7 +22,6 @@ export const events = pgTable('events', {
   price: real('price').notNull(),
   eventProvider: text('event_provider'),
   externalId: text('external_id'),
-  hasSeats: boolean('has_seats').notNull().default(false),
   createdAt: timestamp('created_at', { withTimezone: true })
     .notNull()
     .defaultNow(),

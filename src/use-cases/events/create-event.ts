@@ -10,9 +10,8 @@ interface CreateEventRequest {
   bannerUrl?: string | null
   capacity: number
   price: number
-  eventProvider?: string | null
-  externalId?: string | null
-  hasSeats?: boolean
+  eventProvider: string | null
+  externalId: string | null
 }
 
 export class CreateEventUseCase {
@@ -33,7 +32,6 @@ export class CreateEventUseCase {
     price,
     eventProvider,
     externalId,
-    hasSeats,
   }: CreateEventRequest): Promise<void> {
     if (!title.trim() || !location.trim()) {
       throw new AppError('Title and location are required', 400)
@@ -62,7 +60,6 @@ export class CreateEventUseCase {
       price,
       eventProvider,
       externalId,
-      hasSeats,
     })
   }
 }

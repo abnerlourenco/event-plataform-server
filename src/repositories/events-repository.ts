@@ -10,7 +10,6 @@ export interface Event {
   price: number
   eventProvider: string | null
   externalId: string | null
-  hasSeats: boolean
   createdAt: Date
 }
 
@@ -23,9 +22,8 @@ export interface CreateEventData {
   bannerUrl?: string | null
   capacity: number
   price: number
-  eventProvider?: string | null
-  externalId?: string | null
-  hasSeats?: boolean
+  eventProvider: string | null
+  externalId: string | null
 }
 
 export interface EventsRepository {

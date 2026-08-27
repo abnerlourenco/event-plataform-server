@@ -12,11 +12,8 @@ const createEventBodySchema = z.object({
   bannerUrl: z.union([z.string().trim().min(1).max(500), z.null()]).optional(),
   capacity: z.coerce.number().int().positive(),
   price: z.coerce.number().nonnegative(),
-  eventProvider: z
-    .union([z.string().trim().min(1).max(50), z.null()])
-    .optional(),
-  externalId: z.union([z.string().trim().min(1).max(100), z.null()]).optional(),
-  hasSeats: z.boolean().default(false),
+  eventProvider: z.union([z.string().trim().min(1).max(50), z.null()]),
+  externalId: z.union([z.string().trim().min(1).max(100), z.null()]),
 })
 
 export async function createEvent(request: Request, response: Response) {
@@ -30,7 +27,6 @@ export async function createEvent(request: Request, response: Response) {
     price,
     eventProvider,
     externalId,
-    hasSeats,
   } = createEventBodySchema.parse(request.body)
 
   const createEventUseCase = makeCreateEventUseCase()
@@ -46,7 +42,6 @@ export async function createEvent(request: Request, response: Response) {
     price,
     eventProvider,
     externalId,
-    hasSeats,
   })
 
   return response.status(201).send()
