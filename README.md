@@ -22,13 +22,24 @@ versionado.
 
 ```env
 PORT=3333
+CORS_ORIGINS=http://localhost:3000
 POSTGRES_URL=...
 JWT_SECRET_TOKEN=uma-chave-com-no-minimo-32-caracteres
 TMDB_API_TOKEN=seu-token-da-api-do-tmdb
 ```
 
-`PORT` é opcional e usa `3000` como padrão. As outras três variáveis são
+`PORT` é opcional e usa `3333` como padrão. `CORS_ORIGINS` deve conter os
+domínios autorizados separados por vírgula. As outras três variáveis são
 obrigatórias.
+
+Exemplo com frontend publicado:
+
+```env
+CORS_ORIGINS=https://app.exemplo.com,https://admin.exemplo.com
+```
+
+Informe somente as origens completas, incluindo `https://`, sem barra final.
+Não use `*` em produção.
 
 ### PostgreSQL via Docker
 
