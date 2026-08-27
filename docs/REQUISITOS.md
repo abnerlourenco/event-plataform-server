@@ -96,14 +96,14 @@
 
 ### RF
 
-- Deve ser possível validar um ingresso utilizando a leitura do QR Code pela câmera.
-- Deve ser possível validar um ingresso digitando manualmente o seu código hash (`hash_code`).
+- Deve ser possível validar um ingresso utilizando a leitura do QR Code pela câmera. -OK
+- Deve ser possível validar um ingresso digitando manualmente o seu código hash (`hash_code`). -OK
 
 ### RN
 
-- Não deve ser possível validar um ingresso caso o usuário logado não seja do perfil `GATEKEEPER` (Portaria).
-- Ao validar um ingresso com status `VALID`, o seu status deve ser alterado para `USED` e devem ser registrados o horário (`validated_at`) e o responsável (`validated_by`).
-- Não deve ser possível validar um ingresso que já esteja com o status `USED` (retornar mensagem de "Ingresso já utilizado").
-- Não deve ser possível validar um ingresso que pertença a outro evento ou que possua um hash inexistente.
+- Não deve ser possível validar um ingresso caso o usuário logado não seja do perfil `GATEKEEPER` (Portaria). -OK
+- Ao validar um ingresso com status `VALID`, o seu status deve ser alterado para `USED` e devem ser registrados o horário (`validated_at`) e o responsável (`validated_by`). -OK
+- Não deve ser possível validar um ingresso que já esteja com o status `USED` (retornar mensagem de "Ingresso já utilizado"). -OK
+- Não deve ser possível validar um ingresso que pertença a outro evento ou que possua um hash inexistente. -OK
 
 ---

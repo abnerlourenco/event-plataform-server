@@ -18,8 +18,8 @@ export const tickets = pgTable('tickets', {
   eventId: uuid('event_id')
     .references(() => events.id, { onDelete: 'cascade' })
     .notNull(),
-  hashCode: text('hash_code'),
-  qrCodeUrl: text('qr_code_url'),
+  hashCode: text('hash_code').notNull().unique(),
+  qrCodeUrl: text('qr_code_url').notNull(),
   status: ticketStatus('status').notNull().default('VALID'),
   seatId: uuid('seat_id')
     .references(() => seats.id)

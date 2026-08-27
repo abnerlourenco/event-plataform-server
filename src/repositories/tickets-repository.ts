@@ -22,7 +22,13 @@ export interface CreateTicketData {
 
 export interface TicketsRepository {
   findById(id: string): Promise<Ticket | null>
+  findByHashCode(hashCode: string): Promise<Ticket | null>
   findByOrderId(orderId: string): Promise<Ticket[] | null>
   create(data: CreateTicketData): Promise<Ticket>
   updateStatusbyId(id: string, status: TicketStatus): Promise<void>
+  markAsUsed(
+    id: string,
+    validatedBy: string,
+    validatedAt: Date
+  ): Promise<boolean>
 }

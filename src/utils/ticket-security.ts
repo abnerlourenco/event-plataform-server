@@ -1,4 +1,4 @@
-import { createHmac, randomInt } from 'node:crypto'
+import { createHmac, randomInt, timingSafeEqual } from 'node:crypto'
 import { env } from '../env.ts'
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -19,4 +19,20 @@ export function signTicket(
   return createHmac('sha256', env.JWT_SECRET_TOKEN)
     .update(`${hashCode}:${orderId}:${eventId}:${seatId}`)
     .digest('hex')
+}
+
+export function isValidTicketSignature(
+  signature: string,
+  hashCode: string,
+  orderId: string,
+  eventId: string,
+  seatId: string
+): boolean {
+  const expectedSignature = signTicket(hashCode, orderId, eventId, seatId)
+  const provided = Buffer.from(signature, 'hex')
+  const expected = Buffer.from(expectedSignature, 'hex')
+
+  return (
+    provided.length === expected.length && timingSafeEqual(provided, expected)
+  )
 }
