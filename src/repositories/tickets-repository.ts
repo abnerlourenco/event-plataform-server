@@ -16,10 +16,13 @@ export interface CreateTicketData {
   orderId: string
   eventId: string
   seatId: string
+  hashCode: string
+  qrCodeUrl: string
 }
 
 export interface TicketsRepository {
   findById(id: string): Promise<Ticket | null>
-  create(data: CreateTicketData): Promise<void>
+  findByOrderId(orderId: string): Promise<Ticket[] | null>
+  create(data: CreateTicketData): Promise<Ticket>
   updateStatusbyId(id: string, status: TicketStatus): Promise<void>
 }

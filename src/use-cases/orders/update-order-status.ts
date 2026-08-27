@@ -1,9 +1,11 @@
+import QRCode from 'qrcode'
 import type {
   OrderStatus,
   OrdersRepository,
 } from '../../repositories/orders-repository.ts'
 import type { SeatsRepository } from '../../repositories/seats-repository.ts'
 import type { TicketsRepository } from '../../repositories/tickets-repository.ts'
+import { generateTicketHash, signTicket } from '../../utils/ticket-security.ts'
 import { AppError } from '../errors/app-error.ts'
 
 interface UpdateOrderStatusRequest {
@@ -46,17 +48,36 @@ export class UpdateOrderStatusUseCase {
       throw new AppError('Approved orders cannot change status', 409)
     }
 
+    if (order.status === 'APPROVED' && status === 'APPROVED') {
+      return
+    }
+
     if (status === 'APPROVED') {
       const seats = await this.seatsRepository.findByOrderId(order.id)
-      await this.seatsRepository.updateStatusByOrderId(order.id, 'SOLD')
 
       for (const seat of seats ?? []) {
+        const hashCode = generateTicketHash()
+        const signature = signTicket(hashCode, order.id, order.eventId, seat.id)
+        const qrCodeUrl = await QRCode.toDataURL(
+          JSON.stringify({
+            hashCode,
+            orderId: order.id,
+            eventId: order.eventId,
+            seatId: seat.id,
+            signature,
+          })
+        )
+
         await this.ticketsRepository.create({
           orderId: order.id,
           eventId: order.eventId,
           seatId: seat.id,
+          hashCode,
+          qrCodeUrl,
         })
       }
+
+      await this.seatsRepository.updateStatusByOrderId(order.id, 'SOLD')
     }
 
     if (status === 'CANCELLED') {

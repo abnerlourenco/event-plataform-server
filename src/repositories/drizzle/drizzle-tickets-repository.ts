@@ -19,8 +19,19 @@ export class DrizzleTicketsRepository implements TicketsRepository {
     return ticket ?? null
   }
 
-  async create(data: CreateTicketData): Promise<void> {
-    await db.insert(tickets).values(data)
+  async create(data: CreateTicketData): Promise<Ticket> {
+    const [ticket] = await db.insert(tickets).values(data).returning()
+
+    return ticket
+  }
+
+  async findByOrderId(orderId: string): Promise<Ticket[] | null> {
+    const orderTickets = await db
+      .select()
+      .from(tickets)
+      .where(eq(tickets.orderId, orderId))
+
+    return orderTickets
   }
 
   async updateStatusbyId(id: string, status: TicketStatus): Promise<void> {

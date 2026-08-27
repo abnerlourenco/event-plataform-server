@@ -81,14 +81,14 @@
 
 ### RF
 
-- Deve ser possível visualizar a lista de ingressos do usuário logado ("Meus Ingressos").
-- Deve ser possivel compartilhar um ingresso via link publico.(qualquer pessoa com link pode abrir)
-- Deve ser possível exibir o QR Code e o código hash de um ingresso individual.
+- Deve ser possível visualizar a lista de ingressos do usuário logado ("Meus Ingressos"). -OK
+- Deve ser possivel compartilhar um ingresso via link publico.(qualquer pessoa com link pode abrir) -OK
+- Deve ser possível exibir o QR Code e o código hash de um ingresso individual. -OK
 
 ### RN
 
 - O usuário deve estar logado para acessar a sua área de "Meus Ingressos".
-- O código hash do ingresso (`hash_code`) deve ser assinado digitalmente para evitar adulteração e falsificação.
+- O código hash do ingresso (`hash_code`) deve ser assinado digitalmente para evitar adulteração e falsificação. -OK
 
 ---
 
