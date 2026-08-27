@@ -31,7 +31,9 @@ export class DrizzleEventsRepository implements EventsRepository {
     return db.select().from(events)
   }
 
-  async create(data: CreateEventData): Promise<void> {
-    await db.insert(events).values(data)
+  async create(data: CreateEventData): Promise<Event> {
+    const [event] = await db.insert(events).values(data).returning()
+
+    return event
   }
 }

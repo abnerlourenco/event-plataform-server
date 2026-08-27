@@ -10,7 +10,7 @@ const createEventBodySchema = z.object({
   dateTime: z.coerce.date(),
   location: z.string().trim().min(2).max(200),
   bannerUrl: z.union([z.string().trim().min(1).max(500), z.null()]).optional(),
-  capacity: z.coerce.number().int().positive(),
+  capacity: z.coerce.number().int().positive().optional(),
   price: z.coerce.number().nonnegative(),
   eventProvider: z.union([z.string().trim().min(1).max(50), z.null()]),
   externalId: z.union([z.string().trim().min(1).max(100), z.null()]),
