@@ -17,5 +17,6 @@ export interface CreateOrderData {
 export interface OrdersRepository {
   findById(id: string): Promise<Order | null>
   findByUser(userId: string): Promise<Order[] | null>
-  create(data: CreateOrderData): Promise<void>
+  create(data: CreateOrderData): Promise<Order>
+  updateStatusById(id: string, status: OrderStatus): Promise<void>
 }

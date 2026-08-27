@@ -13,6 +13,8 @@ export interface CreateSeatData {
 }
 
 export interface SeatsRepository {
+  findById(id: string): Promise<Seat | null>
   create(data: CreateSeatData): Promise<void>
   findByEventId(eventId: string): Promise<Seat[] | null>
+  updateStatusById(id: string, status: SeatStatus): Promise<void>
 }

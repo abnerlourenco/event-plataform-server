@@ -63,15 +63,15 @@
 
 ### RF
 
-- Deve ser possível selecionar ingressos por quantidade (pista) ou por assento específico no mapa.
-- Deve ser possível criar um pedido (`order`) para reserva e pagamento.
-- Deve ser possível simular o fluxo de pagamento com aprovação, recusa ou cancelamento.
+- Deve ser possível criar um order com um ou mais assentos(`seat`). -OK
+- Deve ser possível criar um pedido (`order`) para reserva e pagamento. -OK
+- Deve ser possível simular o fluxo de pagamento com aprovação, recusa ou cancelamento. -OK
 
 ### RN
 
-- O usuário deve estar logado na aplicação para realizar a reserva e compra do ingresso.
-- Não deve ser possível reservar um assento que já esteja marcado com status `RESERVED` ou `SOLD`.
-- Não deve ser possível vender uma quantidade de ingressos de pista superior à capacidade (`capacity`) total do evento.
+- O usuário deve estar logado na aplicação para realizar a reserva e compra do ingresso. -OK
+- Não deve ser possível reservar um assento que já esteja marcado com status `RESERVED` ou `SOLD`. -OK
+- Não deve ser possível vender uma quantidade de ingressos de pista superior à capacidade (`capacity`) total do evento. -OK
 - Ao aprovar o pagamento do pedido, os ingressos (`ticket`) correspondentes devem ser gerados com o status `VALID`.
 - Caso o pagamento seja recusado ou cancelado, os assentos e ingressos selecionados devem retornar ao status disponível.
 

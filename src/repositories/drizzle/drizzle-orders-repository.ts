@@ -4,6 +4,7 @@ import { orders } from '../../drizzle/schema/orders.ts'
 import type {
   CreateOrderData,
   Order,
+  OrderStatus,
   OrdersRepository,
 } from '../orders-repository.ts'
 
@@ -27,7 +28,13 @@ export class DrizzleOrdersRepository implements OrdersRepository {
     return userOrders
   }
 
-  async create(data: CreateOrderData): Promise<void> {
-    await db.insert(orders).values(data)
+  async create(data: CreateOrderData): Promise<Order> {
+    const [order] = await db.insert(orders).values(data).returning()
+
+    return order
+  }
+
+  async updateStatusById(id: string, status: OrderStatus): Promise<void> {
+    await db.update(orders).set({ status }).where(eq(orders.id, id))
   }
 }
