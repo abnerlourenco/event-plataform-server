@@ -22,6 +22,7 @@ export interface MoviesSearchResult {
 }
 
 export interface MoviesRepository {
+  findById(id: number): Promise<Movie>
   findNowPlaying(page: number): Promise<MoviesSearchResult>
   findPopular(page: number): Promise<MoviesSearchResult>
   findUpcoming(page: number): Promise<MoviesSearchResult>

@@ -2,6 +2,7 @@ import { env } from '../../env.ts'
 import { AppError } from '../../use-cases/errors/app-error.ts'
 import type {
   DiscoverMoviesFilters,
+  Movie,
   MoviesRepository,
   MoviesSearchResult,
 } from '../movies-repository.ts'
@@ -23,6 +24,20 @@ interface TmdbMoviesResponse {
 }
 
 export class TmdbMoviesRepository implements MoviesRepository {
+  async findById(id: number): Promise<Movie> {
+    const result = await this.requestMovie(`/movie/${id}`)
+
+    return {
+      id: result.id,
+      title: result.title,
+      originalTitle: result.original_title,
+      overview: result.overview,
+      posterPath: result.poster_path,
+      backdropPath: result.backdrop_path,
+      releaseDate: result.release_date,
+    }
+  }
+
   async findNowPlaying(page: number): Promise<MoviesSearchResult> {
     return await this.requestMovies('/movie/now_playing', {
       page: String(page),
@@ -98,4 +113,41 @@ export class TmdbMoviesRepository implements MoviesRepository {
       totalResults: result.total_results,
     }
   }
+
+  private async requestMovie(path: string): Promise<TmdbMovieResponse> {
+    const url = new URL(`https://api.themoviedb.org/3${path}`)
+
+    let response: Response
+
+    try {
+      response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${env.TMDB_API_TOKEN}`,
+          accept: 'application/json',
+        },
+      })
+    } catch {
+      throw new AppError('Unable to reach TMDB', 502)
+    }
+
+    if (response.status === 404) {
+      throw new AppError('Movie not found', 404)
+    }
+
+    if (!response.ok) {
+      throw new AppError('Unable to retrieve movie from TMDB', 502)
+    }
+
+    return (await response.json()) as TmdbMovieResponse
+  }
+}
+
+interface TmdbMovieResponse {
+  id: number
+  title: string
+  original_title: string
+  overview: string
+  poster_path: string | null
+  backdrop_path: string | null
+  release_date: string
 }

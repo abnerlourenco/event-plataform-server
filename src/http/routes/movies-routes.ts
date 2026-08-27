@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { discoverMovies } from '../controllers/movies/discover.ts'
+import { getMovieById } from '../controllers/movies/movie-details.ts'
 import { getNowPlayingMovies } from '../controllers/movies/now-playing.ts'
 import { getPopularMovies } from '../controllers/movies/popular.ts'
 import { getUpcomingMovies } from '../controllers/movies/upcoming.ts'
@@ -31,6 +32,12 @@ moviesRoutes.get(
   ensureAuthenticated,
   ensureOrganizer,
   discoverMovies
+)
+moviesRoutes.get(
+  '/:movieId',
+  ensureAuthenticated,
+  ensureOrganizer,
+  getMovieById
 )
 
 export { moviesRoutes }
