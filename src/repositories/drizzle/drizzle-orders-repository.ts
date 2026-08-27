@@ -1,6 +1,7 @@
-import { eq } from 'drizzle-orm'
+import { and, eq, inArray } from 'drizzle-orm'
 import { db } from '../../drizzle/client.ts'
 import { orders } from '../../drizzle/schema/orders.ts'
+import { seats } from '../../drizzle/schema/seats.ts'
 import type {
   CreateOrderData,
   Order,
@@ -29,9 +30,30 @@ export class DrizzleOrdersRepository implements OrdersRepository {
   }
 
   async create(data: CreateOrderData): Promise<Order> {
-    const [order] = await db.insert(orders).values(data).returning()
+    return await db.transaction(async transaction => {
+      const [order] = await transaction
+        .insert(orders)
+        .values({
+          userId: data.userId,
+          totalAmount: data.totalAmount,
+          eventId: data.eventId,
+        })
+        .returning()
 
-    return order
+      await transaction
+        .update(seats)
+        .set({ status: 'RESERVED', orderId: order.id })
+        .where(
+          and(
+            eq(seats.eventId, data.eventId),
+            eq(seats.status, 'AVAILABLE'),
+            inArray(seats.id, data.seatIds)
+          )
+        )
+        .returning({ id: seats.id })
+
+      return order
+    })
   }
 
   async updateStatusById(id: string, status: OrderStatus): Promise<void> {

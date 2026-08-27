@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { db } from '../../drizzle/client.ts'
 import { seats } from '../../drizzle/schema/seats.ts'
 import type {
@@ -35,7 +35,34 @@ export class DrizzleSeatsRepository implements SeatsRepository {
     return eventSeats
   }
 
+  async findByOrderId(orderId: string): Promise<Seat[] | null> {
+    const orderSeats = await db
+      .select()
+      .from(seats)
+      .where(eq(seats.orderId, orderId))
+
+    return orderSeats
+  }
+
   async updateStatusById(id: string, status: SeatStatus): Promise<void> {
     await db.update(seats).set({ status }).where(eq(seats.id, id))
+  }
+
+  async updateIdByIdAndEventId(
+    id: string,
+    eventId: string,
+    orderId: string
+  ): Promise<void> {
+    await db
+      .update(seats)
+      .set({ orderId })
+      .where(and(eq(seats.id, id), eq(seats.eventId, eventId)))
+  }
+
+  async updateStatusByOrderId(
+    orderId: string,
+    status: SeatStatus
+  ): Promise<void> {
+    await db.update(seats).set({ status }).where(eq(seats.orderId, orderId))
   }
 }

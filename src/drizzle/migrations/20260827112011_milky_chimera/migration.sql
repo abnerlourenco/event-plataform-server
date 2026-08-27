@@ -1,0 +1,2 @@
+ALTER TABLE "seats" ADD COLUMN "order_id" uuid;--> statement-breakpoint
+ALTER TABLE "seats" ADD CONSTRAINT "seats_order_id_orders_id_fkey" FOREIGN KEY ("order_id") REFERENCES "orders"("id") ON DELETE SET NULL;

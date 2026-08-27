@@ -12,6 +12,7 @@ export interface CreateOrderData {
   userId: string
   totalAmount: number
   eventId: string
+  seatIds: string[]
 }
 
 export interface OrdersRepository {

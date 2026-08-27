@@ -34,39 +34,38 @@ export class CreateOrderUseCase {
       throw new AppError('Total amount cannot be negative', 400)
     }
 
-    const validSeatIds = seatIds ?? []
-
-    if (validSeatIds.length === 0) {
+    if (seatIds.length === 0) {
       throw new AppError('At least one seat must be provided', 400)
     }
 
-    for (const selectedSeatId of validSeatIds) {
-      const seat = await this.seatsRepository.findById(selectedSeatId)
+    await Promise.all(
+      seatIds.map(async seatId => {
+        const existingSeat = await this.seatsRepository.findById(seatId)
 
-      if (!seat) {
-        throw new AppError(`Seat not found: ${selectedSeatId}`, 404)
-      }
+        if (!existingSeat) {
+          throw new AppError(`Seat not found: ${seatId}`, 404)
+        }
 
-      if (seat.eventId !== eventId) {
-        throw new AppError(
-          `Seat ${selectedSeatId} does not belong to this event`,
-          400
-        )
-      }
+        if (existingSeat.eventId !== eventId) {
+          throw new AppError(
+            `Seat ${seatId} does not belong to this event`,
+            400
+          )
+        }
 
-      if (seat.status !== 'AVAILABLE') {
-        throw new AppError(`Seat ${selectedSeatId} is not available`, 409)
-      }
-    }
+        if (existingSeat.status !== 'AVAILABLE') {
+          throw new AppError(`Seat ${seatId} is not available`, 409)
+        }
+      })
+    )
 
-    for (const selectedSeatId of validSeatIds) {
-      await this.seatsRepository.updateStatusById(selectedSeatId, 'RESERVED')
-    }
-
-    return await this.ordersRepository.create({
+    const order = await this.ordersRepository.create({
       userId,
       totalAmount,
       eventId,
+      seatIds,
     })
+
+    return order
   }
 }
